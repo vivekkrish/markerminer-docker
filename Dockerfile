@@ -57,4 +57,4 @@ RUN mkdir -p $PACKAGES
 RUN git clone https://bitbucket.org/srikarchamala/markerminer $PACKAGES/markerminer
 
 # Set workdir
-WORKDIR $PACKGES/markerminer
+WORKDIR $PACKAGES/markerminer
