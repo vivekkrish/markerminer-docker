@@ -54,7 +54,9 @@ RUN rm -rf /tmp/build-markerminer
 # Clone the markerminer repository from bitbucket
 ENV PACKAGES /usr/local/packages
 RUN mkdir -p $PACKAGES
-RUN git clone https://bitbucket.org/srikarchamala/markerminer $PACKAGES/markerminer
+WORKDIR $PACKAGES
+RUN git clone https://bitbucket.org/srikarchamala/markerminer
 
 # Set workdir
+ENV PATH $PACKAGES/markerminer:$PATH
 WORKDIR $PACKAGES/markerminer
