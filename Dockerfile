@@ -3,10 +3,10 @@ FROM centos:6.6
 MAINTAINER Vivek Krishnakumar <vivekkrishnakumar@gmail.com>
 
 # Set up the base dependencies
-RUN yum -q -y update
-RUN yum groupinstall -q -y --setopt=group_package_types=optional 'Development tools'
-RUN yum groupinstall -q -y 'Scientific support'
-RUN yum install -q -y tar wget git bzip2-devel httpd-devel openssl-devel bind-utils
+RUN yum -q -y update \
+  && yum groupinstall -q -y --setopt=group_package_types=optional "Development tools" \
+  && yum groupinstall -q -y "Scientific support" \
+  && yum install -q -y tar wget git bzip2-devel httpd-devel openssl-devel bind-utils
 
 # Install Python 2.7.9
 WORKDIR /tmp
@@ -28,19 +28,19 @@ RUN wget -q https://bootstrap.pypa.io/ez_setup.py -O - | /usr/local/bin/python
 RUN wget -q https://bootstrap.pypa.io/get-pip.py -O - | /usr/local/bin/python
 
 # Install required Python modules
-RUN pip install virtualenv
+RUN pip install --quiet virtualenv
 RUN easy_install -f http://biopython.org/DIST/ biopython
-RUN pip install mandrill
+RUN pip install --quiet mandrill
 
 # Install NCBI BLAST+
-RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.30+-x64-linux.tar.gz
+RUN wget -q ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.30+-x64-linux.tar.gz
 RUN tar -zxf ncbi-blast-2.2.30+-x64-linux.tar.gz
 WORKDIR ncbi-blast-2.2.30+/
 RUN cp -pr bin/* /usr/local/bin/.
 
 # Install Mafft
 WORKDIR /tmp/build-markerminer
-RUN wget http://mafft.cbrc.jp/alignment/software/mafft-7.215-with-extensions-src.tgz
+RUN wget -q http://mafft.cbrc.jp/alignment/software/mafft-7.215-with-extensions-src.tgz
 RUN tar -zxf mafft-7.215-with-extensions-src.tgz
 WORKDIR mafft-7.215-with-extensions/core/
 RUN make clean && make && make install
@@ -51,12 +51,21 @@ RUN make clean && make && make install
 WORKDIR /tmp
 RUN rm -rf /tmp/build-markerminer
 
-# Clone the markerminer repository from bitbucket
-ENV PACKAGES /usr/local/packages
-RUN mkdir -p $PACKAGES
-WORKDIR $PACKAGES
-RUN git clone https://bitbucket.org/srikarchamala/markerminer
+# Set environment for webapp
+ENV WWW_DIR /var/www
 
-# Set workdir
-ENV PATH $PACKAGES/markerminer:$PATH
-WORKDIR $PACKAGES/markerminer
+# Clone the markerminer-webapp repository from bitbucket
+RUN mkdir -p $WWW_DIR
+WORKDIR $WWW_DIR
+RUN git clone --recursive https://bitbucket.org/vivekkrish/markerminer-webapp markerminer
+WORKDIR markerminer
+RUN pip install --quiet -r requirements.txt
+
+# Add pipeline executable to PATH
+ENV PATH $WWW_DIR/markerminer/pipeline:$PATH
+
+# Set up iptables, expose specific ports (TCP)
+EXPOSE 5000
+
+# Start up MarkerMiner web application
+CMD python markerminer.py
