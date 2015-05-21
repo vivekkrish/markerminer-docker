@@ -57,7 +57,7 @@ ENV WWW_DIR /var/www
 # Clone the markerminer-webapp repository from bitbucket
 RUN mkdir -p $WWW_DIR
 WORKDIR $WWW_DIR
-RUN git clone --recursive https://bitbucket.org/vivekkrish/markerminer-webapp markerminer
+RUN git clone --recursive https://github.com/vivekkrish/markerminer-webapp.git markerminer
 WORKDIR markerminer
 RUN pip install --quiet -r requirements.txt
 
