@@ -33,9 +33,9 @@ RUN easy_install -f http://biopython.org/DIST/ biopython
 RUN pip install --quiet mandrill
 
 # Install NCBI BLAST+
-RUN wget -q ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.30+-x64-linux.tar.gz
-RUN tar -zxf ncbi-blast-2.2.30+-x64-linux.tar.gz
-WORKDIR ncbi-blast-2.2.30+/
+RUN wget -q ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.29/ncbi-blast-2.2.29+-x64-linux.tar.gz
+RUN tar -zxf ncbi-blast-2.2.29+-x64-linux.tar.gz
+WORKDIR ncbi-blast-2.2.29+/
 RUN cp -pr bin/* /usr/local/bin/.
 
 # Install Mafft

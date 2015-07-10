@@ -1,6 +1,6 @@
 markerminer-docker
 ---
-[![Docker Pulls](https://img.shields.io/docker/pulls/vivekkrish/markerminer.svg?style=flat-square)](https://registry.hub.docker.com/u/vivekkrish/markerminer/) [![Docker Stars](https://img.shields.io/docker/stars/vivekkrish/markerminer.svg?style=flat-square)](https://registry.hub.docker.com/u/vivekkrish/markerminer/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/vivekkrish/markerminer.svg?style=flat-square)](https://registry.hub.docker.com/u/vivekkrish/markerminer/)
  
 Targeted sequencing using next-generation sequencing (NGS) platforms offers enormous potential for plant systematics
 by enabling economical acquisition of multilocus data sets that can resolve difficult phylogenetic problems. However,
