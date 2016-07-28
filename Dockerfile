@@ -1,6 +1,7 @@
 FROM centos:6.6
 
 MAINTAINER Vivek Krishnakumar <vivekkrishnakumar@gmail.com>
+LABEL version="1.2"
 
 # Set up the base dependencies
 RUN yum -q -y update \
