@@ -30,8 +30,8 @@ RUN wget -q https://bootstrap.pypa.io/get-pip.py -O - | /usr/local/bin/python
 
 # Install required Python modules
 RUN pip install --quiet virtualenv
+RUN pip install --quiet sendgrid
 RUN easy_install -f http://biopython.org/DIST/ biopython
-RUN pip install --quiet mandrill
 
 # Install NCBI BLAST+
 RUN wget -q ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.29/ncbi-blast-2.2.29+-x64-linux.tar.gz
