@@ -1,7 +1,7 @@
 FROM centos:6.6
 
 MAINTAINER Vivek Krishnakumar <vivekkrishnakumar@gmail.com>
-LABEL version="1.2"
+LABEL version="1.3"
 
 # Set up the base dependencies
 RUN yum -q -y update \
@@ -30,7 +30,6 @@ RUN wget -q https://bootstrap.pypa.io/get-pip.py -O - | /usr/local/bin/python
 
 # Install required Python modules
 RUN pip install --quiet virtualenv
-RUN pip install --quiet sendgrid
 RUN easy_install -f http://biopython.org/DIST/ biopython
 
 # Install NCBI BLAST+
